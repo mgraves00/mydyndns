@@ -1,0 +1,40 @@
+.\" $Id$
+.\"
+.\" Copyright (c) 2017 Michael Graves <mgraves@brainfat.net>
+.\"
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.Dd $Id$
+.Dt mydyndns 1
+.Os
+.Sh NAME
+.Nm mydyndns
+.Nd CGI program the accepts communicated with DynDNS clients and saves information to a local database
+.Sh SYNOPSIS
+.Nm mydyndns
+.Sh DESCRIPTION
+The
+.Nm
+CGI prgram accepts communcation from DynDNS compatible clients and saves the information in a local database.  This database can be manuiplated and used to generate DNS compatible zone files.
+.Sh FILES
+.Pa /var/www/cgi-bin/mydyndns.db
+.Sh SEE ALSO
+.Xr mydyndns_adduser 1
+.Xr mydyndns_cleanup 1
+.Xr mydyndns_gendns 1
+.Sh AUTHORS
+.An Michael Graves Aq Mt mgraves@brainfat.net
+.Sh SECURITY CONSIDERATIONS
+The
+.Nm
+CGI program does require a username & password be supplied using HTTP Basic authentication.  Since this authentication scheme is not encrypted, if the network traffic is intercepted then the username and password will be exposed.  It is recommended that the HTTP server be configured to require HTTPS communication before access from a client is granted.

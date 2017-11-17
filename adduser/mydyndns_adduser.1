@@ -1,0 +1,46 @@
+.\" $Id$
+.\"
+.\" Copyright (c) 2017 Michael Graves <mgraves@brainfat.net>
+.\"
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.Dd $Id$
+.Dt mydyndns_adduser 1
+.Os
+.Sh NAME
+.Nm mydyndns_adduser
+.Nd utility to add user accounts to the mydyndns.db file.
+.Sh SYNOPSIS
+.Nm mydyndns_adduser
+.Op Fl d Ar database_file
+.Op Fl u Ar username
+.Sh DESCRIPTION
+The
+.Nm
+will add a user name and password hash to the mydyndns.db.
+.Sh FILES
+.Pa /var/www/cgi-bin/mydyndns.db
+.Sh SEE ALSO
+.Xr mydyndns 1
+.Xr mydyndns_cleanup 1
+.Xr mydyndns_gendns 1
+.Sh AUTHORS
+.An Michael Graves Aq Mt mgraves@brainfat.net
+.Sh SECURITY CONSIDERATIONS
+The
+.Nm
+will use a SHA1 hash on the user password before it is stored in the database.  In order to hash the password it is passed thru the
+.Xr sha1 1
+program and thus may be visable in a
+.Xr ps 1
+from local users.
