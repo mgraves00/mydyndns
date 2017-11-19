@@ -38,6 +38,10 @@ enum	key {
 	KEY_MYIP,
 	KEY_NAME,
 	KEY_TTL,
+	KEY_WILDCARD,	// depreciated
+	KEY_MX,		// depreciated
+	KEY_BACKUPMX,	// depreciated
+	KEY_OFFLINE,	// not used
 	KEY__MAX
 };
 
@@ -45,6 +49,10 @@ static const struct kvalid keys[KEY__MAX] = {
 	{ kvalid_stringne, "myip" }, /* KEY_MYIP */
 	{ kvalid_stringne, "name" }, /* KEY_NAME */
 	{ kvalid_uint, "ttl" }, /* KEY_TTL */
+	{ kvalid_stringne, "wildcard" }, /* KEY_WILDCARD */
+	{ kvalid_stringne, "mx" }, /* KEY_MX */
+	{ kvalid_stringne, "backmx" }, /* KEY_BACKUPMX */
+	{ kvalid_stringne, "offline" }, /* KEY_offline */
 };
 
 static void
@@ -140,19 +148,19 @@ main(void)
 
 	if (r.reqmap[KREQU_AUTHORIZATION] == NULL) {
 		noauth(&r,KHTTP_401);
-		khttp_puts(&r, "unknown");
+		khttp_puts(&r, "badauth");
 		khttp_free(&r);
 		return(EXIT_SUCCESS);
 	}
 	if ((rc = base64_pton(r.rawauth.d.basic.response, buf, sizeof(buf))) == -1) {
 		noauth(&r, KHTTP_401);
-		khttp_puts(&r, "unknown");
+		khttp_puts(&r, "badauth");
 		khttp_free(&r);
 		return(EXIT_SUCCESS);
 	}
 	if (check_user(&r, buf, &user) != 0) {
 		noauth(&r, KHTTP_401);
-		khttp_puts(&r, "authfailed");
+		khttp_puts(&r, "badauth");
 		khttp_free(&r);
 		if (rc != 2)
 			free(user);
@@ -163,7 +171,7 @@ main(void)
 		p = &(r.fields[i]);
 		if (p->state != KPAIR_VALID) {
 			resp_open(&r, KHTTP_200);
-			khttp_puts(&r, "noarg");
+			khttp_puts(&r, "911");
 			khttp_free(&r);
 			free(user);
 			return(EXIT_SUCCESS);
@@ -179,7 +187,7 @@ main(void)
 			/* make sure we are not to big or small */
 			if (x < 300 || x > INTMAX_MAX) {
 				resp_open(&r, KHTTP_200);
-				khttp_puts(&r, "noarg");
+				khttp_puts(&r, "911");
 				khttp_free(&r);
 				free(user);
 				return(EXIT_SUCCESS);
@@ -187,16 +195,23 @@ main(void)
 			if ((asprintf(&ttl, "%llu", x)) < 0) {
 				/* error with allocating string */
 				resp_open(&r, KHTTP_200);
-				khttp_puts(&r, "noarg");
+				khttp_puts(&r, "911");
 				khttp_free(&r);
 				free(user);
 				return(EXIT_SUCCESS);
 			}
 		}
 	}
-	if (myip == NULL || name == NULL) {
+	if (myip == NULL) {
 		resp_open(&r, KHTTP_200);
-		khttp_puts(&r, "noarg");
+		khttp_puts(&r, "noip");
+		khttp_free(&r);
+		free(user);
+		return(EXIT_SUCCESS);
+	}
+	if (name == NULL) {
+		resp_open(&r, KHTTP_200);
+		khttp_puts(&r, "nohost");
 		khttp_free(&r);
 		free(user);
 		return(EXIT_SUCCESS);
@@ -205,10 +220,10 @@ main(void)
 		if ((ttl = strdup(DEFAULT_TTL)) == NULL) {
 			/* not memory */
 			resp_open(&r, KHTTP_200);
-			khttp_puts(&r, "noarg");
+			khttp_puts(&r, "911");
 			khttp_free(&r);
 			free(user);
-			return(EXIT_SUCCESS);
+			return(EXIT_FAILURE);
 		}
 	}
 
@@ -222,7 +237,8 @@ main(void)
 		khttp_puts(&r, "nochg");
 		break;
 	default: /* rc < 0 */
-		khttp_puts(&r, "dnserr");
+//		khttp_puts(&r, "dnserr");
+		khttp_puts(&r, "911");
 		break;
 	}
 
