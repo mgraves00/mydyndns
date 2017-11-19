@@ -1,4 +1,0 @@
-+ update the database location dor something so we dont need to change the owner.group of the
-/var/www/run directory
-+ use kutil_log* to log  errors
-
