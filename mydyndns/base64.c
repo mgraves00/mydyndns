@@ -1,4 +1,4 @@
-/* $Id */
+/* $Id$ */
 
 /* taken from OpenBSD /usr/src/lib/libc/net/base64.c */
 
