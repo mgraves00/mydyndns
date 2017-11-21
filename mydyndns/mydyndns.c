@@ -47,12 +47,12 @@ enum	key {
 
 static const struct kvalid keys[KEY__MAX] = {
 	{ kvalid_stringne, "myip" }, /* KEY_MYIP */
-	{ kvalid_stringne, "name" }, /* KEY_NAME */
+	{ kvalid_stringne, "hostname" }, /* KEY_NAME */
 	{ kvalid_uint, "ttl" }, /* KEY_TTL */
 	{ kvalid_stringne, "wildcard" }, /* KEY_WILDCARD */
 	{ kvalid_stringne, "mx" }, /* KEY_MX */
 	{ kvalid_stringne, "backmx" }, /* KEY_BACKUPMX */
-	{ kvalid_stringne, "offline" }, /* KEY_offline */
+	{ kvalid_stringne, "offline" }, /* KEY_OFFLINE */
 };
 
 static void
@@ -179,7 +179,7 @@ main(void)
 		if (strcmp(p->key,"myip") == 0) {
 			myip = (char*)p->parsed.s;
 		}
-		if (strcmp(p->key,"name") == 0) {
+		if (strcmp(p->key,"hostname") == 0) {
 			name = (char*)p->parsed.s;
 		}
 		if (strcmp(p->key,"ttl") == 0) {
