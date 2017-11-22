@@ -1,0 +1,18 @@
+After the CGI program is installed and the initial database is created, you will need to make
+some updates to your web environment.
+
+1) The sqlite3 database is installed in /var/www/run.  When modifying the direction sqlite3 will
+need to create temporary files in that director, so the director permissions will need to all
+the web user to create files in that directory.
+
+2) The mydyndns_cleanup.sh script should be run via cron on a semi regular basis.  The following
+example will run the script once a day.
+
+0 0 * * * /usr/local/bin/mydyndns_cleanup.sh -d /var/www/run/mydyndns.db -t 30
+
+3) The mydyndns_gendns.sh script should be run on a regular interval to support updates.  The
+following will run the script once an hour.
+
+0 * * * * /usr/local/bin/mydyndns_gendns.sh -d /var/www/run/mydyndns.db -o dynamic.dns.zone.name > /path/to/the/zone/files.zone
+1 * * * * /script/to/reload/dns_server
+
