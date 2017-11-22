@@ -14,5 +14,6 @@ BINOWN=		www
 afterinstall:
 	sqlite3 /tmp/${PROG}.db < ${.CURDIR}/${PROG}.sql
 	${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 660 /tmp/${PROG}.db ${BINDIR}/../run
+	echo "Please read AFTER_INSTALL"
 
 .include <bsd.prog.mk>
