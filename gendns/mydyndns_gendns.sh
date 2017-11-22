@@ -120,5 +120,5 @@ fi
 
 print_head
 print_soa "$ORIGIN" "$EMAIL" "$REF" "$RET" "$EXP" "$MIN"
-get_domain "$DATABASE" | awk 'BEGIN { FS="," }{ print $1, $3, " IN A ", $2 }'
+get_domain "$DATABASE" | awk 'BEGIN { FS="," }{ printf "%s. %s IN A %s", $1, $3, $2 }'
 
