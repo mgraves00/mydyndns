@@ -41,7 +41,7 @@ function get_domain {
 	local _d=$1; shift;
 
 	local _sql="SELECT name,address,ttl FROM domain;"
-	printf ".separator ,\n$_sql" | sqlite3 $_d
+	printf ".separator ,\n$_sql" | /usr/local/bin/sqlite3 $_d
 }
 
 function print_head {
