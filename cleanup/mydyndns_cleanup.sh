@@ -34,7 +34,7 @@ function cleanup_domain {
 	printf "$_sql" | sqlite3 $_d
 }
 
-args=`getopt d:hu: $*`
+args=`getopt d:ht:u: $*`
 if [ $? -ne 0 ]; then
 	usage
 	exit 2
